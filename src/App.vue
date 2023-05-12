@@ -5,7 +5,8 @@ let todos = ref([])
 let inp = ref('')
 
 function addTodo () {
-  todos.value.push(inp.value)
+  todos.value.push({text: inp.value,
+  complete: false})
   inp.value = ''
 }
 
@@ -17,12 +18,13 @@ function deleteTodo (index) {
 <template>
 <h1>My Todo Application</h1>
 
-<ul>
-<li v-for = "(todo, index) in todos">
-  <button @click="deleteTodo">X</button>
+
+<div v-for = "(todo, index) in todos">
+  <input type = "checkbox" v-model = "todo.complete">
+  <button @click="deleteTodo(index)">X</button>
 {{ index }}
-{{ todo }}</li>
-</ul>
+{{ todo.text }}
+</div>
 
 <input v-model="inp" @keydown.enter="addTodo">
 <button @click="addTodo">Add Todo</button>
@@ -31,5 +33,6 @@ function deleteTodo (index) {
 <style>
  body{
   background-color: bisque;
+  text-align: center;
 }
 </style>
