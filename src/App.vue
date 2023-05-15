@@ -1,8 +1,12 @@
 <script setup>
-import {ref} from 'vue'
+import {ref, watch} from 'vue'
 
-let todos = ref([])
+let todos = ref(JSON.parse(window.localStorage.getItem('todos')))
 let inp = ref('')
+
+watch(todos, function(value) {
+  window.localStorage.setItem('todos', JSON.stringify(value))
+}, {deep: true})
 
 function addTodo () {
   todos.value.push({text: inp.value,
