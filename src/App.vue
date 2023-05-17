@@ -1,6 +1,7 @@
 <script setup>
 import {ref, watch} from 'vue'
 
+let filter = ref('all')
 let todos = ref(JSON.parse(window.localStorage.getItem('todos')) ?? [])
 let inp = ref('')
 
@@ -17,13 +18,31 @@ function addTodo () {
 function deleteTodo (index) {
   todos.value.splice(index, 1)
 }
+
+
+function todoFilter (todo) {
+  if (filter.value == 'active') {
+    return todo.complete == false
+  } else if (filter.value == 'complete'){
+    return todo.complete == true
+  } else {
+    return true
+  }
+}
 </script>
 
 <template>
 <h1>My Todo Application</h1>
+<input name = "filter" type = "radio" value = "all" v-model="filter">
+<label>All</label>
 
+<input name = "filter" type = "radio" value = "active" v-model="filter">
+<label>Active</label>
 
-<div v-for = "(todo, index) in todos" :class="{completed: todo.complete}">
+<input name = "filter" type = "radio" value = "complete" v-model="filter">
+<label>Complete</label>
+
+<div v-for = "(todo, index) in todos.filter(todoFilter)" :class="{completed: todo.complete}">
   <input type = "checkbox" v-model = "todo.complete">
   <button @click="deleteTodo(index)">x</button>
 {{ todo.text }}
@@ -36,7 +55,6 @@ function deleteTodo (index) {
 <style>
  body{
   background-color: bisque;
-  text-align: center;
 }
 
 .completed {
