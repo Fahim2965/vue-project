@@ -38,7 +38,7 @@ function activeFilter (todo) {
 <template>
 <h1>My Todo Application</h1>
 
-<p v-if = "todos.length > 0">
+<p v-if = "todos.length > 0" class = "bord">
   <input name = "filter" type = "radio" value = "all" v-model="filter">
 <label>All</label>
 
@@ -49,15 +49,15 @@ function activeFilter (todo) {
 <label>Complete</label>
 </p>
 
-<input v-model="inp" @keydown.enter="addTodo">
-<button @click="addTodo">Add Todo</button>
+<input class ="put" v-model="inp" @keydown.enter="addTodo" placeholder = "I have to...">
+<button @click="addTodo" class = "but">Add Todo</button>
 
 
 <p>{{ todos.filter(activeFilter).length }} Tasks left</p>
 <div v-for = "(todo, index) in todos.filter(todoFilter)" :class="{completed: todo.complete}"> 
   <input type = "checkbox" v-model = "todo.complete">
 {{ todo.text }}
-<button @click="deleteTodo(index)">x</button>
+<button class = "ut" @click="deleteTodo(index)">x</button>
 </div>
    
 
@@ -68,6 +68,14 @@ function activeFilter (todo) {
   background-color: bisque;
   font-family: "Baloo 2", sans-serif;
 }
+  
+.put {
+  width: 50%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+}
 
 .completed {
   text-decoration: line-through;
@@ -75,12 +83,12 @@ function activeFilter (todo) {
 }
 
 input[type=checkbox] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-       appearance: none;
-  background-color: var(--form-background);
-  margin: 0;
-  font: inherit;
+ appearance: none;
+ appearance: none;
+ appearance: none;
+ background-color: var(--form-background);
+ margin: 0;
+ font: inherit;
   color: currentColor;
   width: 1.15em;
   height: 1.15em;
@@ -128,8 +136,12 @@ button {
       transition: all 0.3s ease-in-out;
     }
 
-    button:hover {
-      background-color: #ff0000;
+    .but:hover {
+      background-color: #F0F8FF;
+    }
+  
+  .ut:hover {
+      background-color: #fd5c63;
     }
 
     body {
@@ -139,5 +151,6 @@ button {
   align-items: center;
   font-family: "Lato", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
     }
+  
 
 </style>
